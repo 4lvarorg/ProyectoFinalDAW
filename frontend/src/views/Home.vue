@@ -50,4 +50,9 @@ export default {
   width: 100%;
   margin: auto;
 }
+
+.carousel img {
+  max-width: 100%;
+  height: auto;
+}
 </style>
