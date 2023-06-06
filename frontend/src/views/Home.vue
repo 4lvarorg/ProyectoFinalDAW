@@ -34,6 +34,7 @@ export default {
       images: [
         'https://www.autonomosyemprendedor.es/asset/thumbnail,1280,720,center,center/media/autonomosyemprendedor/images/2019/09/12/2019091219232360513.jpg',
         'https://uploads-ssl.webflow.com/6165ed3d14364c72a597fe4e/6197bb66750848861998d8fd_pexels-photo-4101143-p-1080.jpeg',
+        'https://s1.eestatic.com/2019/01/18/actualidad/actualidad_369475125_112625460_1706x960.jpg',
       ],
     }
   },
