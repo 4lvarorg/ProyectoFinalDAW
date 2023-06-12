@@ -2,11 +2,13 @@ package com.helpmybrain.configuracion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import com.helpmybrain.service.security.CustomUserDetailsService;
 
 @Configuration
@@ -25,11 +27,14 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <-- Línea nueva
                 .antMatchers("/v1/citas/**").hasAnyAuthority("ADMIN", "USUARIO", "PSICOLOGO")
                 .antMatchers("/v1/psicologos/**").hasAnyAuthority("ADMIN", "PSICOLOGO")
                 .antMatchers("/v1/roles/**").hasAuthority("ADMIN")
                 .antMatchers("/v1/usuarios/**").hasAnyAuthority("ADMIN", "USUARIO")
                 .antMatchers("/loginUsuario").permitAll()
+                .antMatchers("/login/loginUsuario").permitAll()  // <-- Línea nueva
+                .antMatchers("/login/loginPsicologo").permitAll()  // <-- Línea nueva
                 .antMatchers("/loginPsicologo").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -41,4 +46,5 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .logout();
     }
+
 }

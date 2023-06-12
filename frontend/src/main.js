@@ -11,6 +11,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 const app = createApp(App)
 
 // Configuración de Axios
-axios.defaults.baseURL = 'http://localhost:8080/helpmybrain/v1' // Asegúrate de que este es el correcto para tu backend
+axios.defaults.baseURL = 'http://localhost:8080/helpmybrain/'
 
 app.use(router).mount('#app')

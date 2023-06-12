@@ -9,6 +9,7 @@ import com.helpmybrain.service.security.CustomUserDetailsService;
 
 @RestController
 @RequestMapping("/login")
+@CrossOrigin(origins = "http://localhost:8081")
 public class LoginController {
 
     @Autowired

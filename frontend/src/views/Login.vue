@@ -1,14 +1,21 @@
 <template>
   <div class="login">
     <h1>Iniciar sesión</h1>
-    <form>
+    <form @submit.prevent="submitForm">
+      <div class="form-group">
+        <label for="userType">Tipo de Usuario</label>
+        <select v-model="userType" class="form-control" id="userType" required>
+          <option value="usuario">Usuario</option>
+          <option value="psicologo">Psicólogo</option>
+        </select>
+      </div>
       <div class="form-group">
         <label for="email">Correo Electrónico</label>
-        <input type="email" class="form-control" id="email" required>
+        <input v-model="email" type="email" class="form-control" id="email" required>
       </div>
       <div class="form-group">
         <label for="password">Contraseña</label>
-        <input type="password" class="form-control" id="password" required>
+        <input v-model="password" type="password" class="form-control" id="password" required>
       </div>
       <button type="submit" class="btn btn-primary">Iniciar sesión</button>
     </form>
@@ -16,8 +23,31 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Login',
+  data() {
+    return {
+      email: '',
+      password: '',
+      userType: 'usuario'
+    }
+  },
+  methods: {
+    async submitForm() {
+      let url = '/login/loginUsuario';
+      if (this.userType === 'psicologo') {
+        url = '/login/loginPsicologo';
+      }
+
+      const response = await axios.post(url, {
+        email: this.email,
+        password: this.password
+      })
+      console.log(response)
+    }
+  }
 }
 </script>
 
