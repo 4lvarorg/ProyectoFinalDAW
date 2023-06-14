@@ -15,12 +15,12 @@ class UsuarioService {
         return axios.get(API_URL + 'email/' + email);
     }
 
-    guardarUsuario(usuario) {
+    insertarUsuario(usuario) {
         return axios.post(API_URL, usuario);
     }
 
     actualizarUsuario(usuario) {
-        return axios.put(API_URL, usuario);
+        return axios.put(API_URL + usuario.id, usuario);
     }
 
     eliminarUsuario(id) {

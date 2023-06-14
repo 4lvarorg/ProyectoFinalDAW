@@ -15,12 +15,12 @@ class PsicologoService {
         return axios.get(API_URL + 'email/' + email);
     }
 
-    guardarPsicologo(psicologo) {
+    insertarPsicologo(psicologo) {
         return axios.post(API_URL, psicologo);
     }
 
     actualizarPsicologo(psicologo) {
-        return axios.put(API_URL, psicologo);
+        return axios.put(API_URL + psicologo.id, psicologo);
     }
 
     eliminarPsicologo(id) {

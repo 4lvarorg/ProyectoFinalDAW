@@ -10,7 +10,7 @@
         <th>Teléfono</th>
         <th>Dirección</th>
         <th>Código Postal</th>
-        <th>Role</th>
+        <th>Rol</th>
         <th>Cita</th>
         <th>Acciones</th>
       </tr>
@@ -24,15 +24,28 @@
         <td>{{ usuario.telefono }}</td>
         <td>{{ usuario.direccion }}</td>
         <td>{{ usuario.codigoPostal }}</td>
-        <td>{{ usuario.role }}</td>
+        <td>{{ usuario.rol }}</td>
         <td>{{ usuario.cita }}</td>
         <td>
-          <button @click="editarUsuario(usuario)">Editar</button>
+          <button @click="actualizarUsuario(usuario)">Actualizar</button>
           <button @click="eliminarUsuario(usuario.id)">Eliminar</button>
         </td>
       </tr>
       </tbody>
     </table>
+    <div>
+      <h2>Insertar/Actualizar Usuario</h2>
+      <input v-model="usuario.id" placeholder="ID">
+      <input v-model="usuario.nombre" placeholder="Nombre">
+      <input v-model="usuario.apellido" placeholder="Apellido">
+      <input v-model="usuario.email" placeholder="Email">
+      <input v-model="usuario.telefono" placeholder="Teléfono">
+      <input v-model="usuario.direccion" placeholder="Dirección">
+      <input v-model="usuario.codigoPostal" placeholder="Código Postal">
+      <input v-model="usuario.rol" placeholder="Rol">
+      <input v-model="usuario.cita" placeholder="Cita">
+      <button @click="guardarUsuario()">Guardar</button>
+    </div>
   </div>
 </template>
 
@@ -43,7 +56,18 @@ export default {
   name: 'TablaUsuario',
   data() {
     return {
-      usuarios: []
+      usuarios: [],
+      usuario: {
+        id: null,
+        nombre: '',
+        apellido: '',
+        email: '',
+        telefono: '',
+        direccion: '',
+        codigoPostal: '',
+        rol: '',
+        cita: ''
+      }
     };
   },
   created() {
@@ -52,8 +76,36 @@ export default {
     });
   },
   methods: {
-    editarUsuario(usuario) {
-      // Aquí irá el código para editar un usuario
+    actualizarUsuario(usuario) {
+      this.usuario = Object.assign({}, usuario);
+    },
+    guardarUsuario() {
+      if (this.usuario.id) {
+        UsuarioService.actualizarUsuario(this.usuario).then(response => {
+          this.usuarios = this.usuarios.map(usuario => {
+            if (usuario.id === response.data.id) {
+              return response.data;
+            } else {
+              return usuario;
+            }
+          });
+        });
+      } else {
+        UsuarioService.insertarUsuario(this.usuario).then(response => {
+          this.usuarios.push(response.data);
+        });
+      }
+      this.usuario = {
+        id: null,
+        nombre: '',
+        apellido: '',
+        email: '',
+        telefono: '',
+        direccion: '',
+        codigoPostal: '',
+        rol: '',
+        cita: ''
+      };
     },
     eliminarUsuario(id) {
       UsuarioService.eliminarUsuario(id).then(() => {
@@ -61,9 +113,5 @@ export default {
       });
     }
   }
-}
+};
 </script>
-
-<style scoped>
-/* Aquí puedes añadir cualquier estilo específico para esta tabla */
-</style>
