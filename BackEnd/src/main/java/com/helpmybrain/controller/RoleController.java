@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/roles")
+@RequestMapping("/roles")
 public class RoleController {
 
     @Autowired

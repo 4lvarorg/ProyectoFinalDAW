@@ -5,6 +5,8 @@ import Home from '../views/Home.vue'
 import Psicologos from '../views/Psicologos.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
+import PanelUsuario from '../views/PanelUsuario.vue'
+import PanelPsicologo from '../views/PanelPsicologo.vue'
 
 const routes = [
   {
@@ -26,6 +28,18 @@ const routes = [
     path: '/registro',
     name: 'Registro',
     component: Registro
+  },
+  {
+    path: '/panelusuario',
+    name: 'PanelUsuario',
+    component: PanelUsuario,
+    meta: { requiresAuth: true } // Asegúrate de que el usuario esté autenticado
+  },
+  {
+    path: '/panelpsicologo',
+    name: 'PanelPsicologo',
+    component: PanelPsicologo,
+    meta: { requiresAuth: true } // Asegúrate de que el usuario esté autenticado
   }
 ]
 
