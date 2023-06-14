@@ -11,12 +11,12 @@ class CitaService {
         return axios.get(API_URL + id);
     }
 
-    guardarCita(cita) {
+    insertarCita(cita) {
         return axios.post(API_URL, cita);
     }
 
     actualizarCita(cita) {
-        return axios.put(API_URL, cita);
+        return axios.put(API_URL + cita.id, cita);
     }
 
     eliminarCita(id) {

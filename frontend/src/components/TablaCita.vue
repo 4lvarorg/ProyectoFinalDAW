@@ -15,18 +15,28 @@
       <tbody>
       <tr v-for="cita in citas" :key="cita.id">
         <td>{{ cita.id }}</td>
-        <td>{{ cita.usuario.nombre }}</td>
-        <td>{{ cita.psicologo.nombre }}</td>
+        <td>{{ cita.usuario }}</td>
+        <td>{{ cita.psicologo }}</td>
         <td>{{ cita.fechaReservada }}</td>
         <td>{{ cita.horaReservada }}</td>
         <td>{{ cita.precioFinal }}</td>
         <td>
-          <button @click="editarCita(cita)">Editar</button>
+          <button @click="actualizarCita(cita)">Actualizar</button>
           <button @click="eliminarCita(cita.id)">Eliminar</button>
         </td>
       </tr>
       </tbody>
     </table>
+    <div>
+      <h2>Insertar/Actualizar Cita</h2>
+      <input v-model="cita.id" placeholder="ID">
+      <input v-model="cita.usuario" placeholder="Usuario">
+      <input v-model="cita.psicologo" placeholder="Psicólogo">
+      <input v-model="cita.fechaReservada" placeholder="Fecha Reservada">
+      <input v-model="cita.horaReservada" placeholder="Hora Reservada">
+      <input v-model="cita.precioFinal" placeholder="Precio Final">
+      <button @click="guardarCita()">Guardar</button>
+    </div>
   </div>
 </template>
 
@@ -37,7 +47,15 @@ export default {
   name: 'TablaCita',
   data() {
     return {
-      citas: []
+      citas: [],
+      cita: {
+        id: '',
+        usuario: '',
+        psicologo: '',
+        fechaReservada: '',
+        horaReservada: '',
+        precioFinal: ''
+      }
     };
   },
   created() {
@@ -46,8 +64,33 @@ export default {
     });
   },
   methods: {
-    editarCita(cita) {
-      // Aquí irá el código para editar una cita
+    actualizarCita(cita) {
+      this.cita = Object.assign({}, cita);
+    },
+    guardarCita() {
+      if (this.cita.id) {
+        CitaService.actualizarCita(this.cita).then(response => {
+          this.citas = this.citas.map(cita => {
+            if (cita.id === response.data.id) {
+              return response.data;
+            } else {
+              return cita;
+            }
+          });
+        });
+      } else {
+        CitaService.insertarCita(this.cita).then(response => {
+          this.citas.push(response.data);
+        });
+      }
+      this.cita = {
+        id: null,
+        usuario: '',
+        psicologo: '',
+        fechaReservada: '',
+        horaReservada: '',
+        precioFinal: null
+      };
     },
     eliminarCita(id) {
       CitaService.eliminarCita(id).then(() => {
@@ -58,6 +101,3 @@ export default {
 }
 </script>
 
-<style scoped>
-/* Aquí puedes añadir cualquier estilo específico para esta tabla */
-</style>
