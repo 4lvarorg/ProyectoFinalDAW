@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/psicologos")
+@CrossOrigin(origins = "http://localhost:8081")
 public class PsicologoController {
 
     @Autowired

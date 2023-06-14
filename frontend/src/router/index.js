@@ -33,13 +33,13 @@ const routes = [
     path: '/panelusuario',
     name: 'PanelUsuario',
     component: PanelUsuario,
-    meta: { requiresAuth: true } // Asegúrate de que el usuario esté autenticado
+    meta: { requiresAuth: true } // esté autenticado
   },
   {
     path: '/panelpsicologo',
     name: 'PanelPsicologo',
     component: PanelPsicologo,
-    meta: { requiresAuth: true } // Asegúrate de que el usuario esté autenticado
+    meta: { requiresAuth: true } //  esté autenticado
   }
 ]
 

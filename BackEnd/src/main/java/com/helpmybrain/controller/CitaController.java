@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/citas")
+@CrossOrigin(origins = "http://localhost:8081")
 public class CitaController {
 
     @Autowired
