@@ -19,12 +19,12 @@
       </div>
       <button type="submit" class="btn btn-primary">Iniciar sesión</button>
     </form>
+    <p>No te has registrado aún? <router-link to="/Registro">Regístrate</router-link></p>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-
 export default {
   name: 'Login',
   data() {
@@ -45,7 +45,16 @@ export default {
         email: this.email,
         password: this.password
       })
-      console.log(response)
+
+      if (response.data) {
+        if (this.userType === 'usuario') {
+          this.$router.push('/PanelUsuario');
+        } else {
+          this.$router.push('/PanelPsicologo');
+        }
+      } else {
+        alert('Usuario o contraseña incorrectos');
+      }
     }
   }
 }
