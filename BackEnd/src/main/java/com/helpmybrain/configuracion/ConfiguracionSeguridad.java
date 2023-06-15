@@ -27,7 +27,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <-- Línea nueva
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <-- Linea nueva
                 .antMatchers("/citas/**").hasAnyAuthority("ADMIN", "USUARIO", "PSICOLOGO")
                 .antMatchers("/psicologos/**").hasAnyAuthority("ADMIN", "PSICOLOGO")
                 .antMatchers("/roles/**").hasAuthority("ADMIN")
@@ -43,8 +43,9 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .and()
-                .csrf().disable()
+                .csrf().disable() // <-- Linea nueva
                 .logout();
+        http.cors(); // <-- Linea nueva
     }
 
 }
