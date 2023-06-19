@@ -1,7 +1,9 @@
 package com.helpmybrain.controller;
 
 import com.helpmybrain.entity.Psicologo;
+import com.helpmybrain.entity.Role;
 import com.helpmybrain.service.PsicologoService;
+import com.helpmybrain.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +16,18 @@ public class PsicologoController {
 
     @Autowired
     private PsicologoService psicologoService;
+    @Autowired
+    private RoleService roleService;
 
     @PostMapping
     public Psicologo guardarPsicologo(@RequestBody Psicologo psicologo) {
-        return psicologoService.guardarPsicologo(psicologo);
+        Role role = roleService.obtenerRolePorId(psicologo.getRole().getId());
+        if (role != null) {
+            psicologo.setRole(role);
+            return psicologoService.guardarPsicologo(psicologo);
+        } else {
+            throw new RuntimeException("Role not found for id :: " + psicologo.getRole().getId());
+        }
     }
 
     @PutMapping

@@ -32,11 +32,15 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <-- Linea nueva
-                .antMatchers("/citas/**").hasAnyAuthority("ADMIN", "USUARIO", "PSICOLOGO")
-                .antMatchers("/psicologos/**").hasAnyAuthority("ADMIN", "PSICOLOGO")
-                .antMatchers("/roles/**").hasAuthority("ADMIN")
-                .antMatchers("/usuarios/**").hasAnyAuthority("ADMIN", "USUARIO")
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/**").permitAll()
+//                .antMatchers("/citas/**").hasAnyAuthority("ADMIN", "USUARIO", "PSICOLOGO")
+//                .antMatchers("/psicologos/**").hasAnyAuthority("ADMIN", "PSICOLOGO")
+//                .antMatchers("/roles/**").hasAuthority("ADMIN")
+//                .antMatchers("/usuarios/**").hasAnyAuthority("ADMIN", "USUARIO")
                 .antMatchers("/loginUsuario").permitAll()
                 .antMatchers("/login/loginUsuario").permitAll()
                 .antMatchers("/login/loginPsicologo").permitAll()

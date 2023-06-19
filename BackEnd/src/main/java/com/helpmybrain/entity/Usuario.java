@@ -27,8 +27,8 @@ public class Usuario {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
-    @OneToOne(mappedBy = "usuario")
-    private Cita cita;
+    @OneToMany(mappedBy = "usuario")
+    private Set<Cita> cita;
 
     // getters y setters
 
@@ -104,12 +104,13 @@ public class Usuario {
         this.role = role;
     }
 
-    public Cita getCita() {
+
+    public Set<Cita> getCita() {
         return cita;
     }
 
-    public void setCita(Cita cita) {
-        this.cita = cita;
+    public void setCita(Set<Cita> citas) {
+        this.cita = citas;
     }
 }
 

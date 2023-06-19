@@ -1,6 +1,8 @@
 package com.helpmybrain.controller;
 
+import com.helpmybrain.entity.Role;
 import com.helpmybrain.entity.Usuario;
+import com.helpmybrain.service.RoleService;
 import com.helpmybrain.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +16,19 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
+    @Autowired
+    private RoleService roleService;
     @PostMapping
     public Usuario guardarUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.guardarUsuario(usuario);
+        Role role = roleService.obtenerRolePorId(usuario.getRole().getId());
+        if (role != null) {
+            usuario.setRole(role);
+            return usuarioService.guardarUsuario(usuario);
+        } else {
+            throw new RuntimeException("Role not found for id :: " + usuario.getRole().getId());
+        }
     }
+
 
     @PutMapping
     public Usuario actualizarUsuario(@RequestBody Usuario usuario) {
