@@ -17,7 +17,7 @@ public class CitaServiceImpl implements CitaService {
     @Override
     public Cita guardarCita(Cita cita) {
         List<Cita> citasAnteriores = citaDAO.obtenerCitasPorUsuarioYPsicologo(cita.getUsuario(), cita.getPsicologo());
-        int numeroDeCitas = citasAnteriores.size();
+        int numeroDeCitas = (citasAnteriores != null) ? citasAnteriores.size() : 0;
         double precioPorHora = cita.getPsicologo().getPrecioPorHora();
         if (numeroDeCitas >= 5 && numeroDeCitas < 10) {
             // Aplicar un descuento del 20% en la próxima cita
