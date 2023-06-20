@@ -43,6 +43,7 @@
 
 <script>
 import CitaService from '../services/CitaService.js';
+import Vue from 'vue';
 
 export default {
   name: 'TablaCita',
@@ -65,7 +66,7 @@ export default {
   methods: {
     fetchCitas() {
       CitaService.obtenerTodasLasCitas().then(response => {
-        this.citas = response.data;
+        Vue.set(this, 'citas', response.data);
       });
     },
     actualizarCita(cita) {
@@ -83,23 +84,24 @@ export default {
       };
 
       // Comprueba si this.cita.id es una cadena vacía en lugar de simplemente comprobar si existe
+      let promise;
       if (this.cita.id !== '') {
-        CitaService.actualizarCita(citaData).then(() => {
-          this.fetchCitas();
-        });
+        promise = CitaService.actualizarCita(citaData);
       } else {
-        CitaService.insertarCita(citaData).then(() => {
-          this.fetchCitas();
-        });
+        promise = CitaService.insertarCita(citaData);
       }
-      this.cita = {
-        id: '',
-        fechaReservada: '',
-        horaReservada: '',
-        precioFinal: '',
-        psicologo_id: '',
-        usuario_id: ''
-      };
+
+      promise.then(() => {
+        this.fetchCitas();
+        this.cita = {
+          id: '',
+          fechaReservada: '',
+          horaReservada: '',
+          precioFinal: '',
+          psicologo_id: '',
+          usuario_id: ''
+        };
+      });
     },
 
     eliminarCita(id) {
