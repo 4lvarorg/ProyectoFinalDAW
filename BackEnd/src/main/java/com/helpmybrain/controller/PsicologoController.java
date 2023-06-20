@@ -21,12 +21,13 @@ public class PsicologoController {
 
     @PostMapping
     public Psicologo guardarPsicologo(@RequestBody Psicologo psicologo) {
-        Role role = roleService.obtenerRolePorId(psicologo.getRole().getId());
+        Integer roleId = psicologo.getRole() != null ? psicologo.getRole().getId() : 3;
+        Role role = roleService.obtenerRolePorId(roleId);
         if (role != null) {
             psicologo.setRole(role);
             return psicologoService.guardarPsicologo(psicologo);
         } else {
-            throw new RuntimeException("Role not found for id :: " + psicologo.getRole().getId());
+            throw new RuntimeException("Role not found for id :: " + roleId);
         }
     }
 

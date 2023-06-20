@@ -20,14 +20,16 @@ public class UsuarioController {
     private RoleService roleService;
     @PostMapping
     public Usuario guardarUsuario(@RequestBody Usuario usuario) {
-        Role role = roleService.obtenerRolePorId(usuario.getRole().getId());
+        Integer roleId = usuario.getRole() != null ? usuario.getRole().getId() : 2;
+        Role role = roleService.obtenerRolePorId(roleId);
         if (role != null) {
             usuario.setRole(role);
             return usuarioService.guardarUsuario(usuario);
         } else {
-            throw new RuntimeException("Role not found for id :: " + usuario.getRole().getId());
+            throw new RuntimeException("Role not found for id :: " + roleId);
         }
     }
+
 
 
     @PutMapping
