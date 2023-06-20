@@ -32,8 +32,8 @@ public class UsuarioController {
 
 
 
-    @PutMapping
-    public Usuario actualizarUsuario(@RequestBody Usuario usuario) {
+    @PutMapping("/{id}")
+    public Usuario actualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
         return usuarioService.actualizarUsuario(usuario);
     }
 

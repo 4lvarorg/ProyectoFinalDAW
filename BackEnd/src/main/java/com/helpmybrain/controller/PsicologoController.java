@@ -31,8 +31,8 @@ public class PsicologoController {
         }
     }
 
-    @PutMapping
-    public Psicologo actualizarPsicologo(@RequestBody Psicologo psicologo) {
+    @PutMapping("/{id}")
+    public Psicologo actualizarPsicologo(@PathVariable Integer id,@RequestBody Psicologo psicologo) {
         return psicologoService.actualizarPsicologo(psicologo);
     }
 
