@@ -74,10 +74,28 @@ public class CitaController {
     }
 
 
-    @PutMapping
-    public Cita actualizarCita(@RequestBody Cita cita) {
-        return citaService.actualizarCita(cita);
+    @PutMapping("/{id}")
+    public Cita actualizarCita(@PathVariable Integer id, @RequestBody Map<String, String> payload) {
+        Integer usuarioId = Integer.parseInt(payload.get("usuario_id"));
+        Integer psicologoId = Integer.parseInt(payload.get("psicologo_id"));
+
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(usuarioId);
+        Psicologo psicologo = psicologoService.obtenerPsicologoPorId(psicologoId);
+
+        if (usuario != null && psicologo != null) {
+            Cita cita = citaService.obtenerCitaPorId(id);
+            if (cita != null) {
+                cita.setUsuario(usuario);
+                cita.setPsicologo(psicologo);
+                return citaService.actualizarCita(cita);
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cita no encontrada");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario o Psicologo no encontrado");
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public void eliminarCita(@PathVariable Integer id) {
