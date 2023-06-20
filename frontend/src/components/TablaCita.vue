@@ -72,7 +72,7 @@ export default {
       this.cita = Object.assign({}, cita);
     },
     guardarCita() {
-      // Crear un nuevo objeto con sólo los campos que necesitas
+
       let citaData = {
         id: this.cita.id,
         fechaReservada: this.cita.fechaReservada,
@@ -82,7 +82,7 @@ export default {
         psicologo_id: Number(this.cita.psicologo_id)
       };
 
-      // Comprueba si this.cita.id es una cadena vacía en lugar de simplemente comprobar si existe
+
       let promise;
       if (this.cita.id !== '') {
         promise = CitaService.actualizarCita(citaData);
