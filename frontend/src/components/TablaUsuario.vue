@@ -24,7 +24,7 @@
         <td>{{ usuario.telefono }}</td>
         <td>{{ usuario.direccion }}</td>
         <td>{{ usuario.codigoPostal }}</td>
-        <td>{{ usuario.rol ? usuario.rol.nombre : '' }}</td>
+        <td>{{ usuario.role_id ? usuario.role_id.nombre : '' }}</td>
         <td>
           <ul v-if="usuario.cita && usuario.cita.length">
             <li v-for="(cita, index) in usuario.cita" :key="index">
@@ -54,7 +54,7 @@
       <input v-model="usuario.telefono" placeholder="Teléfono">
       <input v-model="usuario.direccion" placeholder="Dirección">
       <input v-model="usuario.codigoPostal" placeholder="Código Postal">
-      <input v-model="usuario.rol" placeholder="Rol">
+      <input v-model="usuario.role_id" placeholder="Rol">
       <button @click="guardarUsuario()">Guardar</button>
     </div>
   </div>
@@ -78,7 +78,7 @@ export default {
         telefono: '',
         direccion: '',
         codigoPostal: '',
-        rol: '',
+        role_id: 2,
       }
     };
   },
@@ -115,7 +115,7 @@ export default {
         telefono: '',
         direccion: '',
         codigoPostal: '',
-        rol: '',
+        role_id: 2,
       };
     },
     eliminarUsuario(id) {

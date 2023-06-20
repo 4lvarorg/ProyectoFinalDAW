@@ -32,7 +32,7 @@
         <td>{{ psicologo.precioPorHora }}</td>
         <td>{{ psicologo.fechaDisponible }}</td>
         <td>{{ psicologo.horaDisponible }}</td>
-        <td>{{ psicologo.rol }}</td>
+        <td>{{ psicologo.role_id }}</td>
         <td>{{ psicologo.cita }}</td>
         <td>
           <button @click="actualizarPsicologo(psicologo)">Actualizar</button>
@@ -54,7 +54,7 @@
       <input v-model="psicologo.precioPorHora" placeholder="Precio por Hora">
       <input v-model="psicologo.fechaDisponible" placeholder="Fecha Disponible">
       <input v-model="psicologo.horaDisponible" placeholder="Hora Disponible">
-      <input v-model="psicologo.rol" placeholder="Rol">
+      <input v-model="psicologo.role_id" placeholder="Rol">
       <input v-model="psicologo.cita" placeholder="Cita">
       <button @click="guardarPsicologo()">Guardar</button>
     </div>
@@ -80,7 +80,7 @@ export default {
         precioPorHora: '',
         fechaDisponible: '',
         horaDisponible: '',
-        rol: '',
+        role_id: 3,
         cita: ''
       }
     };
@@ -122,7 +122,7 @@ export default {
         precioPorHora: null,
         fechaDisponible: '',
         horaDisponible: '',
-        rol: '',
+        role_id: 3,
         cita: ''
       };
     },
