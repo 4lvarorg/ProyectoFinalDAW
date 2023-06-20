@@ -87,6 +87,20 @@ public class CitaController {
             if (cita != null) {
                 cita.setUsuario(usuario);
                 cita.setPsicologo(psicologo);
+
+                // Aquí es donde debes actualizar los campos de la cita con los datos del payload
+                if (payload.containsKey("precioFinal")) {
+                    cita.setPrecioFinal(Double.valueOf(payload.get("precioFinal")));
+                }
+                if (payload.containsKey("fechaReservada")) {
+                    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    cita.setFechaReservada(LocalDate.parse(payload.get("fechaReservada"), dateFormatter));
+                }
+                if (payload.containsKey("horaReservada")) {
+                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                    cita.setHoraReservada(LocalTime.parse(payload.get("horaReservada"), timeFormatter));
+                }
+
                 return citaService.actualizarCita(cita);
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cita no encontrada");
@@ -95,6 +109,7 @@ public class CitaController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario o Psicologo no encontrado");
         }
     }
+
 
 
     @DeleteMapping("/{id}")

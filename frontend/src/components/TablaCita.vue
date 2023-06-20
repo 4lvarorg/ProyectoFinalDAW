@@ -22,6 +22,7 @@
         <td>{{ cita.usuario_id }}</td>
         <td>
           <button @click="actualizarCita(cita)">Actualizar</button>
+          <button @click="eliminarCita(cita.id)">Eliminar</button>
         </td>
       </tr>
       </tbody>
@@ -35,6 +36,7 @@
       <input v-model="cita.psicologo_id" placeholder="Psicólogo ID">
       <input v-model="cita.usuario_id" placeholder="Usuario ID">
       <button @click="guardarCita()">Guardar</button>
+      <button @click="eliminarCita(cita.id)">Eliminar</button>
     </div>
   </div>
 </template>
@@ -80,7 +82,8 @@ export default {
         psicologo_id: Number(this.cita.psicologo_id)
       };
 
-      if (this.cita.id) {
+      // Comprueba si this.cita.id es una cadena vacía en lugar de simplemente comprobar si existe
+      if (this.cita.id !== '') {
         CitaService.actualizarCita(citaData).then(() => {
           this.fetchCitas();
         });
@@ -107,6 +110,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .tabla-cita {
