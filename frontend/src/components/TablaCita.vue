@@ -22,7 +22,6 @@
         <td>{{ cita.usuario_id }}</td>
         <td>
           <button @click="actualizarCita(cita)">Actualizar</button>
-          <button @click="eliminarCita(cita.id)">Eliminar</button>
         </td>
       </tr>
       </tbody>
