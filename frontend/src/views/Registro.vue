@@ -17,7 +17,7 @@
         <label for="password">Contraseña</label>
         <input type="password" v-model="password" class="form-control" id="password" required>
       </div>
-      <!-- Add additional fields as needed -->
+
       <button type="submit" class="btn btn-primary">Registrar</button>
     </form>
   </div>
@@ -42,6 +42,7 @@ export default {
       const data = {
         email: this.email,
         password: this.password,
+        role_id: this.type === 'usuario' ? 2 : 3,
         // Add additional fields as needed
       };
 
