@@ -43,7 +43,7 @@ export default {
         email: this.email,
         password: this.password,
         role_id: this.type === 'usuario' ? 2 : 3,
-        // Add additional fields as needed
+
       };
 
       try {
