@@ -127,7 +127,7 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 th {
-  background-color: #4caf50;
+  background-color: #0d6efd;
   color: white;
 }
 </style>
