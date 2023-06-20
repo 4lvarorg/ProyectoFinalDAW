@@ -34,7 +34,7 @@ export default {
       type: 'usuario',
       email: '',
       password: '',
-      // Add additional fields as needed
+
     };
   },
   methods: {
