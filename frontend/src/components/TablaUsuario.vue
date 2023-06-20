@@ -24,8 +24,20 @@
         <td>{{ usuario.telefono }}</td>
         <td>{{ usuario.direccion }}</td>
         <td>{{ usuario.codigoPostal }}</td>
-        <td>{{ usuario.rol }}</td>
-        <td>{{ usuario.cita }}</td>
+        <td>{{ usuario.rol ? usuario.rol.nombre : '' }}</td>
+        <td>
+          <ul v-if="usuario.cita && usuario.cita.length">
+            <li v-for="(cita, index) in usuario.cita" :key="index">
+              <template v-if="typeof cita === 'object'">
+                ID: {{ cita.id }}, Fecha Reservada: {{ cita.fechaReservada }}, Hora Reservada: {{ cita.horaReservada }}, Precio Final: {{ cita.precioFinal }}
+              </template>
+              <template v-else>
+                {{ cita }}
+              </template>
+            </li>
+          </ul>
+          <span v-else>No hay citas</span>
+        </td>
         <td>
           <button @click="actualizarUsuario(usuario)">Actualizar</button>
           <button @click="eliminarUsuario(usuario.id)">Eliminar</button>
@@ -43,11 +55,12 @@
       <input v-model="usuario.direccion" placeholder="Dirección">
       <input v-model="usuario.codigoPostal" placeholder="Código Postal">
       <input v-model="usuario.rol" placeholder="Rol">
-      <input v-model="usuario.cita" placeholder="Cita">
       <button @click="guardarUsuario()">Guardar</button>
     </div>
   </div>
 </template>
+
+
 
 <script>
 import UsuarioService from '../services/UsuarioService.js';
@@ -58,7 +71,7 @@ export default {
     return {
       usuarios: [],
       usuario: {
-        id: null,
+        id: '',
         nombre: '',
         apellido: '',
         email: '',
@@ -66,7 +79,6 @@ export default {
         direccion: '',
         codigoPostal: '',
         rol: '',
-        cita: ''
       }
     };
   },
@@ -96,7 +108,7 @@ export default {
         });
       }
       this.usuario = {
-        id: null,
+        id: '',
         nombre: '',
         apellido: '',
         email: '',
@@ -104,7 +116,6 @@ export default {
         direccion: '',
         codigoPostal: '',
         rol: '',
-        cita: ''
       };
     },
     eliminarUsuario(id) {

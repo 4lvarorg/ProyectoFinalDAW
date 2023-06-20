@@ -69,7 +69,7 @@ export default {
     return {
       psicologos: [],
       psicologo: {
-        id: null,
+        id: '',
         nombre: '',
         apellido: '',
         email: '',
@@ -77,7 +77,7 @@ export default {
         direccion: '',
         codigoPostal: '',
         codColegiado: '',
-        precioPorHora: null,
+        precioPorHora: '',
         fechaDisponible: '',
         horaDisponible: '',
         rol: '',

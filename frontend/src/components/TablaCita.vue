@@ -15,8 +15,8 @@
       <tbody>
       <tr v-for="cita in citas" :key="cita.id">
         <td>{{ cita.id }}</td>
-        <td>{{ cita.usuario }}</td>
-        <td>{{ cita.psicologo }}</td>
+        <td>{{ cita.usuario.nombre }}</td>
+        <td>{{ cita.psicologo.nombre }}</td>
         <td>{{ cita.fechaReservada }}</td>
         <td>{{ cita.horaReservada }}</td>
         <td>{{ cita.precioFinal }}</td>
@@ -30,8 +30,16 @@
     <div>
       <h2>Insertar/Actualizar Cita</h2>
       <input v-model="cita.id" placeholder="ID">
-      <input v-model="cita.usuario" placeholder="Usuario">
-      <input v-model="cita.psicologo" placeholder="Psicólogo">
+      <select v-model="cita.usuario.id">
+        <option v-for="usuario in usuarios" :key="usuario.id" :value="usuario.id">
+          {{ usuario.nombre }}
+        </option>
+      </select>
+      <select v-model="cita.psicologo.id">
+        <option v-for="psicologo in psicologos" :key="psicologo.id" :value="psicologo.id">
+          {{ psicologo.nombre }}
+        </option>
+      </select>
       <input v-model="cita.fechaReservada" placeholder="Fecha Reservada">
       <input v-model="cita.horaReservada" placeholder="Hora Reservada">
       <input v-model="cita.precioFinal" placeholder="Precio Final">
@@ -42,16 +50,26 @@
 
 <script>
 import CitaService from '../services/CitaService.js';
+import UsuarioService from '../services/UsuarioService.js';
+import PsicologoService from '../services/PsicologoService.js';
 
 export default {
   name: 'TablaCita',
   data() {
     return {
       citas: [],
+      usuarios: [],
+      psicologos: [],
       cita: {
         id: '',
-        usuario: '',
-        psicologo: '',
+        usuario: {
+          id: '',
+          nombre: ''
+        },
+        psicologo: {
+          id: '',
+          nombre: ''
+        },
         fechaReservada: '',
         horaReservada: '',
         precioFinal: ''
@@ -61,6 +79,12 @@ export default {
   created() {
     CitaService.obtenerTodasLasCitas().then(response => {
       this.citas = response.data;
+    });
+    UsuarioService.obtenerTodosLosUsuarios().then(response => {
+      this.usuarios = response.data;
+    });
+    PsicologoService.obtenerTodosLosPsicologos().then(response => {
+      this.psicologos = response.data;
     });
   },
   methods: {
@@ -83,14 +107,6 @@ export default {
           this.citas.push(response.data);
         });
       }
-      this.cita = {
-        id: null,
-        usuario: '',
-        psicologo: '',
-        fechaReservada: '',
-        horaReservada: '',
-        precioFinal: null
-      };
     },
     eliminarCita(id) {
       CitaService.eliminarCita(id).then(() => {
@@ -100,4 +116,3 @@ export default {
   }
 }
 </script>
-
