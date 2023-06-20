@@ -15,7 +15,6 @@
         <th>Fecha Disponible</th>
         <th>Hora Disponible</th>
         <th>Rol</th>
-        <th>Cita</th>
         <th>Acciones</th>
       </tr>
       </thead>
@@ -33,7 +32,6 @@
         <td>{{ psicologo.fechaDisponible }}</td>
         <td>{{ psicologo.horaDisponible }}</td>
         <td>{{ psicologo.role_id }}</td>
-        <td>{{ psicologo.cita }}</td>
         <td>
           <button @click="actualizarPsicologo(psicologo)">Actualizar</button>
           <button @click="eliminarPsicologo(psicologo.id)">Eliminar</button>
@@ -55,7 +53,6 @@
       <input v-model="psicologo.fechaDisponible" placeholder="Fecha Disponible">
       <input v-model="psicologo.horaDisponible" placeholder="Hora Disponible">
       <input v-model="psicologo.role_id" placeholder="Rol">
-      <input v-model="psicologo.cita" placeholder="Cita">
       <button @click="guardarPsicologo()">Guardar</button>
     </div>
   </div>
@@ -69,7 +66,7 @@ export default {
     return {
       psicologos: [],
       psicologo: {
-        id: '',
+        id: null,
         nombre: '',
         apellido: '',
         email: '',
@@ -81,7 +78,6 @@ export default {
         fechaDisponible: '',
         horaDisponible: '',
         role_id: 3,
-        cita: ''
       }
     };
   },
@@ -111,7 +107,7 @@ export default {
         });
       }
       this.psicologo = {
-        id: null,
+        id: '',
         nombre: '',
         apellido: '',
         email: '',
@@ -119,11 +115,10 @@ export default {
         direccion: '',
         codigoPostal: '',
         codColegiado: '',
-        precioPorHora: null,
+        precioPorHora: '',
         fechaDisponible: '',
         horaDisponible: '',
         role_id: 3,
-        cita: ''
       };
     },
     eliminarPsicologo(id) {

@@ -43,7 +43,6 @@
 
 <script>
 import CitaService from '../services/CitaService.js';
-import Vue from 'vue';
 
 export default {
   name: 'TablaCita',
@@ -66,7 +65,7 @@ export default {
   methods: {
     fetchCitas() {
       CitaService.obtenerTodasLasCitas().then(response => {
-        Vue.set(this, 'citas', response.data);
+        this.citas = response.data;
       });
     },
     actualizarCita(cita) {
