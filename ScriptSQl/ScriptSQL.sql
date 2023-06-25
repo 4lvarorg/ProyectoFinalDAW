@@ -34,7 +34,7 @@ CREATE TABLE `cita` (
   KEY `FKb3l8n6flyfg5uxsvimq1idnt8` (`usuario_id`),
   CONSTRAINT `FKb2b9jna1rju8mphfebalfkfs8` FOREIGN KEY (`psicologo_id`) REFERENCES `psicologo` (`id`),
   CONSTRAINT `FKb3l8n6flyfg5uxsvimq1idnt8` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `cita` (
 
 LOCK TABLES `cita` WRITE;
 /*!40000 ALTER TABLE `cita` DISABLE KEYS */;
-INSERT INTO `cita` (`id`, `fecha_reservada`, `hora_reservada`, `precio_final`, `psicologo_id`, `usuario_id`) VALUES (7,'2023-06-17','21:00:00',10,1,2),(10,'2023-06-23','21:00:00',10,1,2),(11,'2023-06-25','21:00:00',10,1,2),(12,'2023-06-28','21:00:00',10,1,2),(16,'2023-06-30','21:00:00',10,1,2),(17,'2023-06-30','21:00:00',8,1,2),(18,'2023-06-30','21:00:00',8,1,2),(19,'2023-06-30','21:00:00',8,1,2),(20,'2023-06-30','21:00:00',8,1,2),(21,'2023-06-30','21:00:00',8,1,2),(22,'2023-06-30','21:00:00',0,1,2);
+INSERT INTO `cita` (`id`, `fecha_reservada`, `hora_reservada`, `precio_final`, `psicologo_id`, `usuario_id`) VALUES (7,'2023-06-19','21:00:00',12,1,2),(10,'2023-06-23','21:00:00',10,1,2),(11,'2023-06-25','15:00:00',10,1,2),(12,'2023-06-28','21:00:00',10,1,2),(16,'2023-06-30','21:00:00',10,1,2),(17,'2023-06-30','21:00:00',8,1,2),(18,'2023-06-30','21:00:00',8,1,2),(19,'2023-06-30','21:00:00',8,1,2),(20,'2023-06-30','21:00:00',8,1,2),(21,'2023-06-30','21:00:00',8,1,2),(22,'2023-06-30','21:00:00',0,1,2),(23,'2023-08-31','20:00:00',0,1,2),(24,'2023-12-12','21:00:00',0,1,2),(25,'2023-11-23','17:00:00',15,8,2),(26,'2023-09-12','13:00:00',0,1,2),(27,'2023-08-15','17:00:00',0,1,2),(28,'2023-07-25','22:00:00',0,1,2),(29,'2023-05-31','23:00:00',10,8,2),(30,'2023-05-31','15:00:00',0,1,2);
 /*!40000 ALTER TABLE `cita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ CREATE TABLE `psicologo` (
   UNIQUE KEY `UK_1omhkc4bqbv20s8hgp31jicik` (`telefono`),
   KEY `FK9nw19qwjbihra1ijsn9tubt54` (`role_id`),
   CONSTRAINT `FK9nw19qwjbihra1ijsn9tubt54` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,7 +83,7 @@ CREATE TABLE `psicologo` (
 
 LOCK TABLES `psicologo` WRITE;
 /*!40000 ALTER TABLE `psicologo` DISABLE KEYS */;
-INSERT INTO `psicologo` (`id`, `apellido`, `codi_colegiado`, `codigo_postal`, `direccion`, `email`, `fecha_disponible`, `hora_disponible`, `nombre`, `password`, `precio_por_hora`, `telefono`, `role_id`) VALUES (1,'domingo',12345,123456,'madrid','domingo@gmail.com','2023-06-17','21:00:00','pepe','$2a$12$O4zSNsa.zhFW8WDrHXLnMuVgRpnhE7De5h4z/GgH8az.HDWKatimK',10,622525252,3),(8,'lamama',1234,11111,'albacete','lamama@lamama.com','2023-08-28','21:00:00','juanma','$2a$12$hirauTEcjJ9dbxdwjeVnE.BP8wiimwG3fNdoBmTwlHoJv.LxjXm/G',10,652202020,3);
+INSERT INTO `psicologo` (`id`, `apellido`, `codi_colegiado`, `codigo_postal`, `direccion`, `email`, `fecha_disponible`, `hora_disponible`, `nombre`, `password`, `precio_por_hora`, `telefono`, `role_id`) VALUES (1,'domingo',12345,123456,'madrid','domingo@gmail.com','2023-06-17','21:00:00','pepe','$2a$12$7BR.B9Y6L2aP8cd0oljk/.BTHVttp8VZsl5JBqBzzsAHLUbie9VDm',44,622525252,3),(8,'lamama',1234,11111,'albacete','lamama@lamama.com','2023-08-28','21:00:00','juanma','$2a$12$hirauTEcjJ9dbxdwjeVnE.BP8wiimwG3fNdoBmTwlHoJv.LxjXm/G',10,652202020,3),(12,'fermin',2323,2131231,'adasda','unico@unico.com','2023-06-26','22:00:00','femin','$2a$12$hirauTEcjJ9dbxdwjeVnE.BP8wiimwG3fNdoBmTwlHoJv.LxjXm/G',2,654646456,3);
 /*!40000 ALTER TABLE `psicologo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +134,7 @@ CREATE TABLE `usuario` (
   UNIQUE KEY `UK_lyn4jrsa2ou2meyuarytj8tcc` (`telefono`),
   KEY `FK3qieopaxyoowdge29v1m51wr9` (`role_id`),
   CONSTRAINT `FK3qieopaxyoowdge29v1m51wr9` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +143,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` (`id`, `apellido`, `codigo_postal`, `direccion`, `email`, `nombre`, `password`, `telefono`, `role_id`) VALUES (1,'admin',111111,'admin','admin@admin.com','admin','$2a$12$CrDniOHP5crT/vlTXwVaNeMxZyRQPwmZ70Z3IrgET3yT7buAZkHwi',611557700,1),(2,'reb',28005,'madrid','reb@reb.com','reb','$2a$12$60wx7NdhhrGLzgGrMKkwWe2slMzEMIdcgQRBqhOu8dzzpLSqyYesO',622552255,2);
+INSERT INTO `usuario` (`id`, `apellido`, `codigo_postal`, `direccion`, `email`, `nombre`, `password`, `telefono`, `role_id`) VALUES (1,'admin',111111,'admin','admin@admin.com','admin','$2a$12$CrDniOHP5crT/vlTXwVaNeMxZyRQPwmZ70Z3IrgET3yT7buAZkHwi',611557700,1),(2,'reb',28005,'madrid','reb@reb.com','reb','$2a$12$60wx7NdhhrGLzgGrMKkwWe2slMzEMIdcgQRBqhOu8dzzpLSqyYesO',622552255,2),(19,NULL,NULL,NULL,'pepe@pepe.com',NULL,'pepe',NULL,2),(24,'asdfafd',37250,'safdafda','mas@mail.com','sfsafda',NULL,65656565,2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -156,4 +156,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-20  8:34:21
+-- Dump completed on 2023-06-25 20:56:02
