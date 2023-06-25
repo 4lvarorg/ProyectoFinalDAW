@@ -11,11 +11,20 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/psicologos">Psicólogos</router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="nombreUsuario === null" class="nav-item">
           <router-link class="nav-link" to="/login">Iniciar sesión</router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="nombreUsuario === null"  class="nav-item">
           <router-link class="nav-link" to="/registro">Registrarse</router-link>
+        </li>
+        <li v-if="nombreUsuario !== null" class="nav-item">
+          <p class="nav-link" >Nombre : {{ nombreUsuario }}</p>
+        </li>
+        <li v-if="nombreUsuario !== null"  class="nav-item">
+          <p class="nav-link" >Email : {{ emailUsuario }}</p>
+        </li>
+        <li v-if="nombreUsuario !== null" class="nav-item">
+          <p @click="logout()" class="nav-link" >Cerrar Session</p>
         </li>
       </ul>
     </div>
@@ -24,8 +33,37 @@
 
 <script>
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  methods: {
+    logout(){
+      sessionStorage.clear();
+      this.emailUsuario=null;
+      this.nombreUsuario=null;
+      this.$router.push('/login');
+    }
+  },
+  data: function(){
+    return{
+      nombreUsuario:null,
+      emailUsuario:null
+    }
+  },
+  created() {
+    this.$watch(
+        () => this.$route.params,
+        (toParams, previousParams) => {
+          if(toParams.nombre){
+            this.nombreUsuario = toParams.nombre;
+            this.emailUsuario = toParams.email;
+          }else {
+            this.nombreUsuario = null;
+            this.emailUsuario = null;
+          }
+        }
+    )
+  }
 }
+
 </script>
 
 <style scoped>

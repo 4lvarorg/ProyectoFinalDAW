@@ -31,6 +31,7 @@ export default {
     return {
       email: '',
       password: '',
+      nombre:'',
       userType: 'usuario'
     }
   },
@@ -43,20 +44,24 @@ export default {
 
       const response = await axios.post(url, {
         email: this.email,
-        password: this.password
+        password: this.password,
+        nombre:this.nombre
       })
 
       if (response.data) {
+        sessionStorage.setItem('userName',response.data.nombre);
+        sessionStorage.setItem('userEmail',response.data.username);
         if (this.userType === 'usuario') {
-          this.$router.push('/PanelUsuario');
+          this.$router.push({name:'PanelUsuario',params:{email:response.data.username,nombre:response.data.nombre,rol:2}});
         } else {
-          this.$router.push('/PanelPsicologo');
+          this.$router.push({name:'PanelPsicologo',params:{email:response.data.username,nombre:response.data.nombre,rol:3}});
         }
       } else {
         alert('Usuario o contraseña incorrectos');
       }
     }
-  }
+  },
+
 }
 </script>
 

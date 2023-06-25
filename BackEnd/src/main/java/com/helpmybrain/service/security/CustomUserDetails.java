@@ -15,17 +15,21 @@ public class CustomUserDetails implements UserDetails {
 
     private String username;
     private String password;
+
+    private String nombre;
     private Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(Usuario usuario) {
         this.username = usuario.getEmail();
         this.password = usuario.getPassword();
+        this.nombre = usuario.getNombre();
         this.authorities = translateRoles(usuario.getRole());
     }
 
     public CustomUserDetails(Psicologo psicologo) {
         this.username = psicologo.getEmail();
         this.password = psicologo.getPassword();
+        this.nombre = psicologo.getNombre();
         this.authorities = translateRoles(psicologo.getRole());
     }
 
@@ -42,6 +46,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     @Override

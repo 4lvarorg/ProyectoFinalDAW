@@ -1,5 +1,7 @@
 package com.helpmybrain.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helpmybrain.entity.Psicologo;
 import com.helpmybrain.entity.Role;
 import com.helpmybrain.service.PsicologoService;
@@ -52,8 +54,11 @@ public class PsicologoController {
     }
 
     @GetMapping
-    public List<Psicologo> obtenerTodosLosPsicologos() {
+    public List<Psicologo> obtenerTodosLosPsicologos()  {
+
+
         return psicologoService.obtenerTodosLosPsicologos();
+
     }
 }
 

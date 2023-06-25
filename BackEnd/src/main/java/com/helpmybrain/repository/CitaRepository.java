@@ -19,4 +19,9 @@ public interface CitaRepository extends CrudRepository<Cita, Integer> {
 
     @Query("SELECT c FROM Cita c WHERE c.psicologo = :psicologo")
     List<Cita> obtenerCitasPorPsicologo(@Param("psicologo") Psicologo psicologo);
+    @Query("SELECT c from Cita c where c.usuario.email = :email")
+    List<Cita> obtenerCitasPorUsuarioEmail(@Param("email") String email);
+
+    @Query("SELECT c FROM Cita c ")
+    List<Cita> obtenerTodasLasCitas();
 }

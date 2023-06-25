@@ -12,4 +12,5 @@ public interface CitaDAO {
     Cita obtenerCitaPorId(Integer id);
     List<Cita> obtenerTodasLasCitas();
     List<Cita> obtenerCitasPorUsuarioYPsicologo(Usuario usuario, Psicologo psicologo);
+    List<Cita> obtenerCitasPorEmailUsuario(String email);
 }

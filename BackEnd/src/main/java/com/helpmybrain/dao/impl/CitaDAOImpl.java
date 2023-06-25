@@ -38,10 +38,16 @@ public class CitaDAOImpl implements CitaDAO {
 
     @Override
     public List<Cita> obtenerTodasLasCitas() {
-        return (List<Cita>) citaRepo.findAll();
+        return  citaRepo.obtenerTodasLasCitas();
     }
     @Override
     public List<Cita> obtenerCitasPorUsuarioYPsicologo(Usuario usuario, Psicologo psicologo) {
         return citaRepo.obtenerCitasPorUsuarioYPsicologo(usuario, psicologo);
     }
+
+    @Override
+    public List<Cita> obtenerCitasPorEmailUsuario(String email) {
+        return citaRepo.obtenerCitasPorUsuarioEmail(email);
+    }
+
 }

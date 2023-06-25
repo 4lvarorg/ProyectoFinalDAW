@@ -16,7 +16,7 @@ class UsuarioService {
     }
 
     insertarUsuario(usuario) {
-        return axios.post(API_URL, usuario);
+        return axios.post(API_URL , usuario);
     }
 
     actualizarUsuario(usuario) {

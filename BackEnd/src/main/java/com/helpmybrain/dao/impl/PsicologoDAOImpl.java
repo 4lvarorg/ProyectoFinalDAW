@@ -36,7 +36,7 @@ public class PsicologoDAOImpl implements PsicologoDAO {
 
     @Override
     public List<Psicologo> obtenerTodosLosPsicologos() {
-        return (List<Psicologo>) psicologoRepo.findAll();
+        return  psicologoRepo.obteneTodosPsicologo();
     }
     @Override
     public Psicologo obtenerPsicologoPorEmail(String email) {

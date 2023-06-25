@@ -11,7 +11,6 @@
         <th>Dirección</th>
         <th>Código Postal</th>
         <th>Rol</th>
-        <th>Cita</th>
         <th>Acciones</th>
       </tr>
       </thead>
@@ -24,20 +23,7 @@
         <td>{{ usuario.telefono }}</td>
         <td>{{ usuario.direccion }}</td>
         <td>{{ usuario.codigoPostal }}</td>
-        <td>{{ usuario.role_id ? usuario.role_id.nombre : '' }}</td>
-        <td>
-          <ul v-if="usuario.cita && usuario.cita.length">
-            <li v-for="(cita, index) in usuario.cita" :key="index">
-              <template v-if="typeof cita === 'object'">
-                ID: {{ cita.id }}, Fecha Reservada: {{ cita.fechaReservada }}, Hora Reservada: {{ cita.horaReservada }}, Precio Final: {{ cita.precioFinal }}
-              </template>
-              <template v-else>
-                {{ cita }}
-              </template>
-            </li>
-          </ul>
-          <span v-else>No hay citas</span>
-        </td>
+        <td>{{ usuario.role.id ? usuario.role.nombre : '' }}</td>
         <td>
           <button @click="actualizarUsuario(usuario)">Actualizar</button>
           <button @click="eliminarUsuario(usuario.id)">Eliminar</button>
@@ -45,16 +31,17 @@
       </tr>
       </tbody>
     </table>
-    <div>
+    <div class="bloque2">
       <h2>Insertar/Actualizar Usuario</h2>
-      <input v-model="usuario.id" placeholder="ID">
       <input v-model="usuario.nombre" placeholder="Nombre">
       <input v-model="usuario.apellido" placeholder="Apellido">
       <input v-model="usuario.email" placeholder="Email">
       <input v-model="usuario.telefono" placeholder="Teléfono">
       <input v-model="usuario.direccion" placeholder="Dirección">
       <input v-model="usuario.codigoPostal" placeholder="Código Postal">
-      <input v-model="usuario.role_id" placeholder="Rol">
+      <select v-model="usuario.role_id">
+        <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.nombre }}</option>
+     </select>
       <button @click="guardarUsuario()">Guardar</button>
     </div>
   </div>
@@ -79,12 +66,30 @@ export default {
         direccion: '',
         codigoPostal: '',
         role_id: 2,
-      }
+      },
+      roles: [
+        { id: 1, nombre: 'Administrador' },
+        { id: 2, nombre: 'Usuario' },
+        { id: 3, nombre: 'Psicologo'}
+      ],
     };
   },
   created() {
+    let usuarioEmail = this.$route.params.email;
+    console.log(usuarioEmail);
+    let esAdmin = false;
     UsuarioService.obtenerTodosLosUsuarios().then(response => {
-      this.usuarios = response.data;
+      response.data.forEach(usuario => {
+        if (usuario.email === usuarioEmail && usuario.role.id ===1) {
+          esAdmin = true;
+        }
+      });
+      if (!esAdmin) {
+        this.usuarios = response.data.filter(usuario => usuario.email === usuarioEmail);
+      }else{
+        this.usuarios = response.data.filter(user => user.id );
+      }
+      console.log(this.usuarios);
     });
   },
   methods: {
@@ -92,7 +97,7 @@ export default {
       this.usuario = Object.assign({}, usuario);
     },
     guardarUsuario() {
-      if (this.usuario.id) {
+      if (this.usuario.id != null && this.usuario.id != "" && this.usuario.id != undefined) {
         UsuarioService.actualizarUsuario(this.usuario).then(response => {
           this.usuarios = this.usuarios.map(usuario => {
             if (usuario.id === response.data.id) {
@@ -103,20 +108,20 @@ export default {
           });
         });
       } else {
-        UsuarioService.insertarUsuario(this.usuario).then(response => {
+        let datos ={
+          nombre: this.usuario.nombre,
+          apellido: this.usuario.apellido,
+          email: this.usuario.email,
+          telefono: this.usuario.telefono,
+          direccion: this.usuario.direccion,
+          codigoPostal: this.usuario.codigoPostal,
+          role_id: this.usuario.role_id,
+        };
+       UsuarioService.insertarUsuario(datos).then(response => {
           this.usuarios.push(response.data);
         });
       }
-      this.usuario = {
-        id: '',
-        nombre: '',
-        apellido: '',
-        email: '',
-        telefono: '',
-        direccion: '',
-        codigoPostal: '',
-        role_id: 2,
-      };
+
     },
     eliminarUsuario(id) {
       UsuarioService.eliminarUsuario(id).then(() => {
@@ -126,3 +131,31 @@ export default {
   }
 };
 </script>
+<style scoped>
+.tabla-usuario {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 60px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+th {
+  background-color: #0d6efd;
+  color: white;
+}
+bloque2{
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 60px;
+}
+</style>

@@ -63,7 +63,7 @@ public class CitaController {
             if (horaReservada == null || horaReservada.isEmpty()) {
                 cita.setHoraReservada(psicologo.getHoraDisponible());
             } else {
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                 cita.setHoraReservada(LocalTime.parse(horaReservada, timeFormatter));
             }
 
@@ -125,5 +125,10 @@ public class CitaController {
     @GetMapping
     public List<Cita> obtenerTodasLasCitas() {
         return citaService.obtenerTodasLasCitas();
+    }
+
+    @GetMapping("email/{email}")
+    public List<Cita> obtenerCitaPorEmail(@PathVariable String email) {
+        return citaService.obtenerCitasPorEmailUsuario(email);
     }
 }

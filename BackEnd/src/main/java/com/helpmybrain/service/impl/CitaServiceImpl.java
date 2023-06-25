@@ -51,5 +51,10 @@ public class CitaServiceImpl implements CitaService {
     public List<Cita> obtenerTodasLasCitas() {
         return citaDAO.obtenerTodasLasCitas();
     }
+
+    @Override
+    public List<Cita> obtenerCitasPorEmailUsuario(String email) {
+        return citaDAO.obtenerCitasPorEmailUsuario(email);
+    }
 }
 

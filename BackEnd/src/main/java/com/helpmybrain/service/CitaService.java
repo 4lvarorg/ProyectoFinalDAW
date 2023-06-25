@@ -10,4 +10,5 @@ public interface CitaService {
     void eliminarCita(Integer id);
     Cita obtenerCitaPorId(Integer id);
     List<Cita> obtenerTodasLasCitas();
+    List<Cita> obtenerCitasPorEmailUsuario(String email);
 }

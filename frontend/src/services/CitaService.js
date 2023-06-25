@@ -22,6 +22,9 @@ class CitaService {
     eliminarCita(id) {
         return axios.delete(API_URL + id);
     }
+    obtenerCitaPorEmail(email) {
+        return axios.get(API_URL + 'email/' + email);
+    }
 }
 
 export default new CitaService();

@@ -36,11 +36,29 @@ const routes = [
     meta: { requiresAuth: true } // esté autenticado
   },
   {
+    path: '/panelusuario/:email',
+    name: 'PanelUsuario',
+    component: PanelUsuario,
+    meta: { requiresAuth: true } // esté autenticado
+  },
+  {
+    path: '/panelusuario/:email/:nombre/:rol',
+    name: 'PanelUsuario',
+    component: PanelUsuario,
+    meta: { requiresAuth: true } // esté autenticado
+  },
+  {
     path: '/panelpsicologo',
     name: 'PanelPsicologo',
     component: PanelPsicologo,
     meta: { requiresAuth: true } //  esté autenticado
-  }
+  },
+  {
+    path: '/panelpsicologo/:email/:nombre/:rol',
+    name: 'PanelPsicologo',
+    component: PanelPsicologo,
+    meta: { requiresAuth: true } // esté autenticado
+  },
 ]
 
 const router = createRouter({
