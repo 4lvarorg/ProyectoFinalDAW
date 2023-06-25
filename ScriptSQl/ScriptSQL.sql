@@ -143,7 +143,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` (`id`, `apellido`, `codigo_postal`, `direccion`, `email`, `nombre`, `password`, `telefono`, `role_id`) VALUES (1,'admin',111111,'admin','admin@admin.com','admin','$2a$12$CrDniOHP5crT/vlTXwVaNeMxZyRQPwmZ70Z3IrgET3yT7buAZkHwi',611557700,1),(2,'reb',28005,'madrid','reb@reb.com','reb','$2a$12$60wx7NdhhrGLzgGrMKkwWe2slMzEMIdcgQRBqhOu8dzzpLSqyYesO',622552255,2),(19,NULL,NULL,NULL,'pepe@pepe.com',NULL,'pepe',NULL,2),(24,'asdfafd',37250,'safdafda','mas@mail.com','sfsafda',NULL,65656565,2);
+INSERT INTO `usuario` (`id`, `apellido`, `codigo_postal`, `direccion`, `email`, `nombre`, `password`, `telefono`, `role_id`) VALUES (1,'admin',111111,'admin','admin@admin.com','admin','$2a$12$CrDniOHP5crT/vlTXwVaNeMxZyRQPwmZ70Z3IrgET3yT7buAZkHwi',611557700,1),(2,'reb',28005,'madrid','reb@reb.com','reb','$2a$12$60wx7NdhhrGLzgGrMKkwWe2slMzEMIdcgQRBqhOu8dzzpLSqyYesO',622552255,2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -156,4 +156,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-25 20:56:02
+-- Dump completed on 2023-06-25 21:05:43
