@@ -27,7 +27,9 @@ public class Cita {
     private LocalTime horaReservada;
     private Double precioFinal;
 
-    // getters y setters
+
+
+
 
     public Integer getId() {
         return id;
