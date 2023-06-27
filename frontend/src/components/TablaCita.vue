@@ -48,6 +48,7 @@
 <script>
 import CitaService from '../services/CitaService.js';
 import PsicologoService from "../services/PsicologoService";
+import UsuarioService from "../services/UsuarioService";
 
 export default {
   name: 'TablaCita',
@@ -65,111 +66,169 @@ export default {
       nombrePsicologo:'',
       nombreUsuario:'',
       psicologos: [],
-      rolLogeado:0
+      rolLogeado:0,
+      usuId : 0
     };
+
   },
   created() {
-    this.rolLogeado = this.$route.params.rol;
-    this.fetchCitas();
-    this.obtenerPsicologos();
 
+    this.rolLogeado = this.$route.params.rol;
+    this.obtenerPsicologos();
+    if(this.rolLogeado ==="2"){
+      this.obtenerUsuario();
+    }else{
+      this.obtenerCitasPsicologo();
+    }
   },
   methods: {
+    obtenerUsuario() {
+      UsuarioService.obtenerUsuarioPorEmail(this.$route.params.email).then(response => {
+        this.usuId = response.data.id;
+        this.nombreUsuario = response.data.nombre;
+        if (response.data.role.id === 1) {
+          this.rolLogeado = 1;
+          this.fetchCitas();
+        }else{
+          this.fetchCitas();
+        }
+      });
+    },
     fetchCitas() {
       let usuarioEmail = this.$route.params.email;
-
-      CitaService.obtenerCitaPorEmail(usuarioEmail).then(response => {
-        let citaPsi = {
-          fechaReservada:'',
-          horaReservada:'',
-          nombrePsicologo:'',
-          precioFinal:0,
-          id:0,
-          usuario:0,
-          psicologo:''
-        }
-        if(response.data.length == 0){
-          CitaService.obtenerTodasLasCitas().then(response => {
-            response.data[0].usuario.cita[0].psicologo.cita.forEach(ele =>{
-              if(ele.id){
-                citaPsi = {
-                  fechaReservada:ele.fechaReservada,
-                  horaReservada:ele.horaReservada,
-                  nombrePsicologo:response.data[0].usuario.cita[0].psicologo.nombre,
-                  precioFinal:ele.precioFinal,
-                  id:ele.id,
-                  usuario:ele.usuario,
-                  psicologo:ele.psicologo,
-                  nombreUsuario:response.data[0].usuario.nombre
-                }
-                this.citas.push(citaPsi);
-              }
-            });
-            this.citas = this.citas.filter(cita => cita.psicologo);
-          });
-        }else{
-          this.nombreUsuario = response.data[0].usuario.nombre;
-          this.cita.usuario_id =response.data[0].usuario.id;
-          this.nombrePsicologo = response.data[0].psicologo.nombre;
-          response.data[0].usuario.cita.forEach(ele =>{
-            if(ele.id){
-              citaPsi = {
-                fechaReservada:ele.fechaReservada,
-                horaReservada:ele.horaReservada,
-                nombrePsicologo:response.data[0].usuario.cita[0].psicologo.nombre,
-                precioFinal:ele.precioFinal,
-                id:ele.id,
-                usuario:ele.usuario,
-                psicologo:ele.psicologo,
-                nombreUsuario:response.data[0].usuario.nombre
-              }
-              this.citas.push(citaPsi);
-              if(ele.psicologo && ele.psicologo.cita){
-                ele.psicologo.cita.forEach(psi => {
-                  if(psi.id){
-                    citaPsi = {
-                      fechaReservada:psi.fechaReservada,
-                      horaReservada:psi.horaReservada,
-                      nombrePsicologo:response.data[0].usuario.cita[0].psicologo.nombre,
-                      precioFinal:psi.precioFinal,
-                      id:psi.id,
-                      usuario:psi.usuario,
-                      psicologo:psi.psicologo,
-                      nombreUsuario:response.data[0].usuario.nombre
-                    }
-                    this.citas.push(citaPsi);
-                  }
-                });
-              }
-              if(ele.psicologo && ele.psicologo.role){
-                if(ele.psicologo.role.psicologos){
-                  ele.psicologo.role.psicologos.forEach(psico => {
-                    if(psico.cita){
-                      psico.cita.forEach(cit => {
-                        if(cit.id){
-                          citaPsi = {
-                            fechaReservada:cit.fechaReservada,
-                            horaReservada:cit.horaReservada,
-                            nombrePsicologo:psico.nombre,
-                            precioFinal:cit.precioFinal,
-                            id:cit.id,
-                            usuario:cit.usuario,
-                            psicologo:cit.psicologo,
-                            nombreUsuario:response.data[0].usuario.nombre
+      if(this.rolLogeado === 1){
+        CitaService.obtenerTodasLasCitas().then(response => {
+          let citaPsi = {
+            fechaReservada:'',
+            horaReservada:'',
+            nombrePsicologo:'',
+            precioFinal:0,
+            id:0,
+            usuario:0,
+            psicologo:''
+          }
+          if(response.data.length !==0){
+            this.nombreUsuario = response.data[0].usuario.nombre;
+            this.cita.usuario_id =response.data[0].usuario.id;
+            this.nombrePsicologo = response.data[0].psicologo.nombre;
+            response.data[0].usuario.role.usuarios.forEach(el =>{
+              if(el.id){
+                el.cita.forEach(element=>{
+                  if(element.id){
+                    element.psicologo.role.psicologos.forEach(psi =>{
+                      if(psi.id){
+                        psi.cita.forEach(cita =>{
+                          if(cita.id){
+                            citaPsi = {
+                              fechaReservada:cita.fechaReservada,
+                              horaReservada:cita.horaReservada,
+                              nombrePsicologo:psi.nombre,
+                              precioFinal:cita.precioFinal,
+                              id:cita.id,
+                              usuario:cita.usuario,
+                              psicologo:cita.psicologo,
+                              nombreUsuario:this.nombreUsuario
+                            }
+                            this.citas.push(citaPsi);
                           }
-                          this.citas.push(citaPsi);
-                        }
-                      });
-                    }
-                  });
-                }
+                        })
+                      }
+                    })
+                  }
+                })
               }
-            }
-          });
-          this.citas = this.citas.filter(cita => cita.psicologo);
-        }
-        console.log('que citas',this.citas)
-      });
+              if(el.id && el.cita.length !== 0){
+                el.cita.forEach(element =>{
+                  if(element.id){
+                    element.psicologo.cita.forEach(cita =>{
+                      if(cita.id){
+                        citaPsi = {
+                          fechaReservada:cita.fechaReservada,
+                          horaReservada:cita.horaReservada,
+                          nombrePsicologo:element.psicologo.nombre,
+                          precioFinal:cita.precioFinal,
+                          id:cita.id,
+                          usuario:cita.usuario,
+                          psicologo:cita.psicologo,
+                          nombreUsuario:this.nombreUsuario
+                        }
+                        this.citas.push(citaPsi);
+                      }
+                    })
+                  }
+                })
+              }
+            })
+            this.citas = this.citas.filter(cita => cita.psicologo);
+          }
+        });
+      }else{
+        CitaService.obtenerCitaPorEmail(usuarioEmail).then(response => {
+          let citaPsi = {
+            fechaReservada:'',
+            horaReservada:'',
+            nombrePsicologo:'',
+            precioFinal:0,
+            id:0,
+            usuario:0,
+            psicologo:''
+          }
+          if(response.data.length !==0){
+            this.nombreUsuario = response.data[0].usuario.nombre;
+            this.cita.usuario_id =response.data[0].usuario.id;
+            this.nombrePsicologo = response.data[0].psicologo.nombre;
+            response.data[0].usuario.role.usuarios.forEach(el =>{
+              if(el.id){
+                el.cita.forEach(element=>{
+                  if(element.id){
+                    element.psicologo.role.psicologos.forEach(psi =>{
+                      if(psi.id){
+                        psi.cita.forEach(cita =>{
+                          if(cita.id){
+                            citaPsi = {
+                              fechaReservada:cita.fechaReservada,
+                              horaReservada:cita.horaReservada,
+                              nombrePsicologo:psi.nombre,
+                              precioFinal:cita.precioFinal,
+                              id:cita.id,
+                              usuario:cita.usuario,
+                              psicologo:cita.psicologo,
+                              nombreUsuario:this.nombreUsuario
+                            }
+                            this.citas.push(citaPsi);
+                          }
+                        })
+                      }
+                    })
+                  }
+                })
+              }
+              if(el.id && el.cita.length !== 0){
+                el.cita.forEach(element =>{
+                  if(element.id){
+                    element.psicologo.cita.forEach(cita =>{
+                      if(cita.id){
+                        citaPsi = {
+                          fechaReservada:cita.fechaReservada,
+                          horaReservada:cita.horaReservada,
+                          nombrePsicologo:element.psicologo.nombre,
+                          precioFinal:cita.precioFinal,
+                          id:cita.id,
+                          usuario:cita.usuario,
+                          psicologo:cita.psicologo,
+                          nombreUsuario:this.nombreUsuario
+                        }
+                        this.citas.push(citaPsi);
+                      }
+                    })
+                  }
+                })
+              }
+            })
+            this.citas = this.citas.filter(cita => cita.psicologo);
+          }
+        });
+      }
     },
     obtenerPsicologos() {
       PsicologoService.obtenerTodosLosPsicologos().then(response => {
@@ -192,13 +251,16 @@ export default {
       this.cita = Object.assign({}, cita);
     },
     guardarCita() {
+
+      this.citas=[];
       const arrayHora = this.cita.horaReservada.split(':');
+
       let citaData = {
         id: this.cita.id,
         fechaReservada: this.cita.fechaReservada,
-        horaReservada: arrayHora[0] + ':' + arrayHora[1],
+        horaReservada: Number(arrayHora[0] + ':' + arrayHora[1]),
         precioFinal: this.cita.precioFinal,
-        usuario_id: Number(this.cita.usuario),
+        usuario_id: Number(this.cita.usuario) ? Number(this.cita.usuario) : this.usuId,
         psicologo_id: Number(this.cita.psicologo_id)
       };
 
@@ -222,10 +284,81 @@ export default {
         };
       });
     },
+    obtenerCitasPsicologo() {
+      let usuarioEmail = this.$route.params.email;
+      let nombreUsuario = this.$route.params.nombre;
+      CitaService.obtenerTodasLasCitas().then(response => {
+        let citaPsi = {
+          fechaReservada:'',
+          horaReservada:'',
+          nombrePsicologo:'',
+          precioFinal:0,
+          id:0,
+          usuario:0,
+          psicologo:''
+        }
+        if(response.data.length !==0){
+          this.nombreUsuario = response.data[0].usuario.nombre;
+          this.cita.usuario_id =response.data[0].usuario.id;
+          this.nombrePsicologo = response.data[0].psicologo.nombre;
+          response.data[0].usuario.role.usuarios.forEach(el =>{
+            if(el.id){
+              el.cita.forEach(element=>{
+                if(element.id){
+                  element.psicologo.role.psicologos.forEach(psi =>{
+                    if(psi.id){
+                      psi.cita.forEach(cita =>{
+                        if(cita.id){
+                          citaPsi = {
+                            fechaReservada:cita.fechaReservada,
+                            horaReservada:cita.horaReservada,
+                            nombrePsicologo:psi.nombre,
+                            precioFinal:cita.precioFinal,
+                            id:cita.id,
+                            usuario:cita.usuario,
+                            psicologo:cita.psicologo,
+                            nombreUsuario:this.nombreUsuario
+                          }
+                          this.citas.push(citaPsi);
+                        }
+                      })
+                    }
+                  })
+                }
+              })
+            }
+            if(el.id && el.cita.length !== 0){
+              el.cita.forEach(element =>{
+                if(element.id){
+                  element.psicologo.cita.forEach(cita =>{
+                    if(cita.id){
+                      citaPsi = {
+                        fechaReservada:cita.fechaReservada,
+                        horaReservada:cita.horaReservada,
+                        nombrePsicologo:element.psicologo.nombre,
+                        precioFinal:cita.precioFinal,
+                        id:cita.id,
+                        usuario:cita.usuario,
+                        psicologo:cita.psicologo,
+                        nombreUsuario:this.nombreUsuario
+                      }
+                      this.citas.push(citaPsi);
+                    }
+                  })
+                }
+              })
+            }
+          })
+          this.citas = this.citas.filter(cita => cita.nombrePsicologo === nombreUsuario);
+        }
+      });
+    },
 
     eliminarCita(id) {
+      this.citas=[];
+      console.log(id)
       CitaService.eliminarCita(id).then(() => {
-        this.$router.go();
+        this.fetchCitas();
       });
     }
   }

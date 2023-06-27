@@ -53,7 +53,9 @@ export default {
         sessionStorage.setItem('userEmail',response.data.username);
         if (this.userType === 'usuario') {
           this.$router.push({name:'PanelUsuario',params:{email:response.data.username,nombre:response.data.nombre,rol:2}});
-        } else {
+        }
+
+        else {
           this.$router.push({name:'PanelPsicologo',params:{email:response.data.username,nombre:response.data.nombre,rol:3}});
         }
       } else {

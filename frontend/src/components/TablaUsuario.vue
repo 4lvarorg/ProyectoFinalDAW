@@ -76,7 +76,7 @@ export default {
   },
   created() {
     let usuarioEmail = this.$route.params.email;
-    console.log(usuarioEmail);
+    this.rolLogeado = this.$route.params.rol;
     let esAdmin = false;
     UsuarioService.obtenerTodosLosUsuarios().then(response => {
       response.data.forEach(usuario => {
@@ -84,12 +84,35 @@ export default {
           esAdmin = true;
         }
       });
+
       if (!esAdmin) {
         this.usuarios = response.data.filter(usuario => usuario.email === usuarioEmail);
+        if(this.rolLogeado === '2'){
+          esAdmin = false;
+          response.data[1].role.usuarios.forEach(usu => {
+            if (usu.id && usu.email === usuarioEmail) {
+              const usuario = {
+                id: usu.id,
+                nombre: usu.nombre,
+                apellido: usu.apellido,
+                email: usu.email,
+                telefono: usu.telefono,
+                direccion: usu.direccion,
+                codigoPostal: usu.codigoPostal,
+                role:{
+                  id:usu.role,
+                  nombre: 'USUARIO',
+                },
+              };
+              this.usuarios.push(usuario);
+            }
+          });
+        }
       }else{
         this.usuarios = response.data.filter(user => user.id );
       }
       console.log(this.usuarios);
+      console.log(this.rolLogeado)
     });
   },
   methods: {
