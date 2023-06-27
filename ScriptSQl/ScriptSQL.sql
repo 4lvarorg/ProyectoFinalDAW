@@ -34,7 +34,7 @@ CREATE TABLE `cita` (
   KEY `FKb3l8n6flyfg5uxsvimq1idnt8` (`usuario_id`),
   CONSTRAINT `FKb2b9jna1rju8mphfebalfkfs8` FOREIGN KEY (`psicologo_id`) REFERENCES `psicologo` (`id`),
   CONSTRAINT `FKb3l8n6flyfg5uxsvimq1idnt8` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `cita` (
 
 LOCK TABLES `cita` WRITE;
 /*!40000 ALTER TABLE `cita` DISABLE KEYS */;
-INSERT INTO `cita` (`id`, `fecha_reservada`, `hora_reservada`, `precio_final`, `psicologo_id`, `usuario_id`) VALUES (34,'2022-05-31','21:00:00',44,1,27),(35,'2025-02-02','22:00:00',2,12,28),(36,'2023-01-01','22:00:00',2,12,28),(37,'2023-04-04','22:00:00',2,12,28),(38,'2025-06-12','22:00:00',2,12,28),(39,'2023-09-01','22:00:00',2,12,28),(40,'2026-02-08','22:00:00',1.6,12,28),(41,'2023-06-23','21:00:00',44,1,28),(42,'2023-08-15','21:00:00',10,8,28),(43,'2023-04-23','21:00:00',44,1,28),(44,'2023-09-01','21:00:00',44,1,28),(45,'2023-08-30','22:00:00',1.6,12,28),(46,'2030-06-11','21:00:00',44,1,28),(47,'2034-05-31','21:00:00',44,1,28),(48,'2023-09-12','21:00:00',10,8,28);
+INSERT INTO `cita` (`id`, `fecha_reservada`, `hora_reservada`, `precio_final`, `psicologo_id`, `usuario_id`) VALUES (34,'2022-05-31','21:00:00',44,1,27),(35,'2025-02-02','22:00:00',2,12,28),(36,'2023-01-01','22:00:00',2,12,28),(37,'2023-04-04','22:00:00',2,12,28),(38,'2025-06-12','22:00:00',2,12,28),(39,'2023-09-01','22:00:00',2,12,28),(40,'2026-02-08','22:00:00',1.6,12,28),(41,'2023-06-23','11:00:00',40,1,28),(42,'2023-08-15','21:00:00',10,8,28),(43,'2023-04-23','21:00:00',44,1,28),(44,'2023-09-01','21:00:00',44,1,28),(45,'2023-08-30','22:00:00',1.6,12,28),(46,'2030-06-11','21:00:00',44,1,28),(47,'2034-05-31','21:00:00',44,1,28),(48,'2023-09-12','21:00:00',10,8,28),(49,'2050-04-20','22:00:00',1.6,12,28);
 /*!40000 ALTER TABLE `cita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,4 +156,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-27 23:35:35
+-- Dump completed on 2023-06-28  0:06:44
