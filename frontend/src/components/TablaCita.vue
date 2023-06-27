@@ -37,7 +37,7 @@
       <input v-model="cita.precioFinal" placeholder="Precio Final"><br><br>
       <label class="label-default">Psicólogo</label>
       <select v-model="cita.psicologo_id">
-        <option v-for="psicologo in psicologos" :key="psicologo.id" :value="psicologo.id">{{ psicologo.nombre }}</option>
+        <option v-for="psicologo in psicologos" :key="psicologo.id" v-bind:value="psicologo.id">{{ psicologo.nombre }}</option>
       </select><br><br>
       <button @click="guardarCita()">Guardar</button>
       <button @click="eliminarCita(cita.id)">Eliminar</button>
@@ -267,6 +267,14 @@ export default {
 
       let promise;
       if (this.cita.id !== '') {
+        citaData = {
+          id: this.cita.id,
+          fechaReservada: this.cita.fechaReservada,
+          horaReservada: arrayHora[0] + ':' + arrayHora[1],
+          precioFinal: this.cita.precioFinal,
+          usuario_id: Number(this.cita.usuario) ? Number(this.cita.usuario) : this.usuId,
+          psicologo_id: Number(this.cita.psicologo_id)
+        };
         promise = CitaService.actualizarCita(citaData);
       } else {
         promise = CitaService.insertarCita(citaData);
